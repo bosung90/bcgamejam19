@@ -64,7 +64,7 @@ export default function BossFight({ match }) {
         />
       </View>
       <img className={styles.classroomBG} src={images.bossFightBG} alt="classroom background" />
-      <View absolute left={30} bottom={30} zIndex={2}>
+      <View absolute right={30} bottom={30} zIndex={2}>
         <Button
           onClick={() => {
             auth.signOut().then(() => {
@@ -73,6 +73,15 @@ export default function BossFight({ match }) {
           }}
         >
           Logout
+        </Button>
+      </View>
+      <View absolute left={30} bottom={30} zIndex={2}>
+        <Button
+          onClick={() => {
+            window.location.href = '/classroom/' + match.params.classroomId
+          }}
+        >
+          Back
         </Button>
       </View>
       <View alignCenter>
