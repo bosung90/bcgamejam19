@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <View fill>
-      <img src={images.header} alt="header" style={{ height: '45%', width: '100%', resizeMode: 'cover' }} />
+      <img src={images.header} alt="header" style={{ maxHeight: '45%', maxWidth: '130%', objectFit: 'cover' }} />
       {loading ? (
         'loading...'
       ) : (
@@ -51,7 +51,11 @@ export default function Home() {
                 </Button>
               </View>
               <View alignCenter>
-                <Input style={{ width: 300, height: 36, marginBottom: 40 }} value="abcdefg" />
+                <View>
+                  <View ml={10}>Enter Class Code</View>
+                  <Input style={{ width: 300, height: 36, marginBottom: 40 }} value="abcdefg" />
+                </View>
+
                 <Button
                   disabled={joining}
                   style={{ width: 180, height: 50 }}
