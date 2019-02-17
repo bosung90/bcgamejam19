@@ -78,7 +78,9 @@ export default function Home() {
                   })
                 }}
               >
-                <View fontSize={70}>+</View>
+                <View cursor="pointer" fontSize={50} bg="#7235A1" color="white" br={50} p={10}>
+                  Join Class
+                </View>
               </button>
             </View>
           ) : (

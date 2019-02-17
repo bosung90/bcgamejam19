@@ -12,13 +12,7 @@ const MATCHES = {
 export default class View extends React.Component {
   state = {}
   componentDidMount() {
-    const {
-      maxXSStyle,
-      maxSMStyle,
-      maxMDStyle,
-      maxLGStyle,
-      maxXLStyle,
-    } = this.props
+    const { maxXSStyle, maxSMStyle, maxMDStyle, maxLGStyle, maxXLStyle } = this.props
     if (maxXSStyle) {
       this._onMatchXS(MATCHES.maxXS)
       MATCHES.maxXS.addListener(this._onMatchXS)
@@ -48,13 +42,7 @@ export default class View extends React.Component {
     MATCHES.maxXL.removeListener(this._onMatchXL)
   }
   render() {
-    const {
-      children,
-      onClick,
-      style: customStyle,
-      className: customClassName,
-      ...props
-    } = this.props
+    const { children, onClick, style: customStyle, className: customClassName, ...props } = this.props
     // 1. Apply base style
     const style = [styles.baseStyle]
     // 2. Apply prop styles
@@ -179,6 +167,9 @@ export default class View extends React.Component {
           break
         case 'whiteSpace':
           style.push(css({ whiteSpace: props[key] }))
+          break
+        case 'cursor':
+          style.push(css({ cursor: props[key] }))
           break
         case 'fill':
           if (props[key] !== true) {
