@@ -69,9 +69,10 @@ export default function Classroom({ match }) {
           />
           <img
             style={{
-              width: '50%',
+              width: Math.min(classroomData.xp / classroomData.maxXp || 0, 1) * 100 + '%',
               height: 40,
               borderRadius: 50,
+              transition: 'width 2s',
             }}
             src={images.yellowBar}
             alt="yellow health bar"
@@ -167,7 +168,16 @@ export default function Classroom({ match }) {
         </View>
       </View>
       <View absolute bottom={30} left={0} right={0} alignCenter>
-        <Button className={styles.animation}>Complete Assignments</Button>
+        <Button
+          className={styles.animation}
+          onClick={() => {
+            getClassroomDoc(match.params.classroomId).update({
+              xp: classroomData.xp + 50,
+            })
+          }}
+        >
+          Complete Assignments
+        </Button>
       </View>
 
       <View pointerEvents="none" absoluteFill>
