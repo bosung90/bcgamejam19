@@ -64,14 +64,17 @@ export default function Classroom({ match }) {
               left: -10,
             }}
             src={images.purpleButton}
-            alt="yellow health bar"
+            alt="purple circle button"
           />
+          <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-24} bottom={-14} bold>
+            {Math.floor(classroomData.xp / 1001) + 1}
+          </View>
           <img
             style={{
-              width: Math.min(classroomData.xp / classroomData.maxXp || 0, 1) * 100 + '%',
+              width: Math.min(classroomData.xp / (Math.ceil(classroomData.xp / 1000) * 1000) || 0, 1) * 100 + '%',
               height: 40,
               borderRadius: 50,
-              transition: 'width 2s',
+              transition: 'width 0.5s',
             }}
             src={images.yellowBar}
             alt="yellow health bar"
