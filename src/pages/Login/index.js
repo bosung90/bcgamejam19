@@ -49,7 +49,7 @@ export default function Login() {
   }
   return (
     <View fill>
-      <img src={images.header} alt="header" style={{ height: '45%', width: '100%', resizeMode: 'cover' }} />
+      <img src={images.header} alt="header" style={{ maxHeight: '45%', maxWidth: '130%', objectFit: 'cover' }} />
       {!!auth.currentUser && <Redirect to="/" />}
       <div className={styles.bannertext}>
         <h1>AstroHamsters</h1>
