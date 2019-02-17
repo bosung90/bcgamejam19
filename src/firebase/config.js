@@ -27,7 +27,7 @@ export const getClassroomStudentsCollection = classroomId =>
     .doc(classroomId)
     .collection('Students')
 
-export const getStudentDocument = (classroomId, studentId) =>
+export const getClassroomStudentDocument = (classroomId, studentId) =>
   firestore
     .collection('Classrooms')
     .doc(classroomId)
