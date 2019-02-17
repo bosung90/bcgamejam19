@@ -23,6 +23,7 @@ export default function Login() {
     <View fill>
       <div className="App">
         <header className="App-header">
+          {!!auth.currentUser && <Redirect to="/" />}
           <img src={logo} className="App-logo" alt="logo" />
           <p>Username</p>
           <input
@@ -90,9 +91,7 @@ export default function Login() {
                 setIsLoggingIn(true)
                 auth
                   .signInWithEmailAndPassword(username + EMAIL_DOMAIN, password)
-                  .then(res => {
-                    alert('successfully logged in')
-                  })
+                  .then(res => {})
                   .catch(e => {
                     alert(e.message)
                   })
@@ -124,7 +123,6 @@ export default function Login() {
                         id: uid,
                         joinedClasses: {},
                       })
-                      alert('successfully created ' + username)
                     })
                     .catch(e => {
                       alert(e.message)
