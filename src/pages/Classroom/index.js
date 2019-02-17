@@ -279,7 +279,7 @@ function MyCharacter(props) {
       <View absolute top={-20} bold color="#FED04A" fontSize={26}>
         {!!props.characterName && props.characterName.toUpperCase()}
       </View>
-      {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ minWidth: 150, width: '20%' }} />}
+      {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ minWidth: 150, width: '15%' }} />}
       {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" className={styles.myCharacter} />}
       {!!cheekItem.imageUrl && <img src={cheekItem.imageUrl} alt="cheek" className={styles.myCharacter} />}
       {!!mouthItem.imageUrl && <img src={mouthItem.imageUrl} alt="mouth" className={styles.myCharacter} />}
@@ -329,7 +329,7 @@ const styles = {
   characterStylingButton: css({ width: 70, minWidth: 65, fontSize: 16 }),
   myCharacter: css({
     minWidth: 150,
-    width: '20%',
+    width: '15%',
     position: 'absolute',
   }),
   animation: css({
