@@ -62,17 +62,17 @@ export default function Classroom({ match }) {
               position: 'absolute',
               width: 60,
               top: -10,
-              left: -10,
+              left: -40,
             }}
             src={images.purpleButton}
             alt="purple circle button"
           />
-          <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-24} bottom={-14} bold>
+          <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-54} bottom={-14} bold>
             {Math.floor(classroomData.xp / 1001) + 1}
           </View>
           <img
             style={{
-              width: Math.min(classroomData.xp / (Math.ceil(classroomData.xp / 1000) * 1000) || 0, 1) * 100 + '%',
+              width: Math.min((classroomData.xp % 1000.0000001) / 1000 || 0, 1) * 100 + '%',
               height: 40,
               borderRadius: 50,
               transition: 'width 0.5s',
