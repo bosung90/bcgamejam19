@@ -207,6 +207,15 @@ export default function Classroom({ match }) {
           {isBossEnabled ? '!!Fight Boss!!' : isDoneAssignment ? 'Assignment Completed!' : 'Complete Assignments'}
         </Button>
       </View>
+      <View absolute right={30} bottom={30} zIndex={2}>
+        <Button
+          onClick={() => {
+            window.location.href = `/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`
+          }}
+        >
+          To Boss
+        </Button>
+      </View>
 
       <View pointerEvents="none" absoluteFill>
         <Select selector={dispatch.user.getId}>
