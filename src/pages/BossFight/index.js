@@ -106,6 +106,7 @@ export default function BossFight({ match }) {
       </View>
       <View absolute bottom={30} left={0} right={0} alignCenter>
         <Button
+          disabled={classroomData.bossCurrentHealth <= 0}
           className={styles.animation}
           onClick={() => {
             new Audio(require('sounds').attack).play()
@@ -119,7 +120,7 @@ export default function BossFight({ match }) {
             })
           }}
         >
-          Attack Boss (-30 Energy)
+          {classroomData.bossCurrentHealth <= 0 ? 'HE IS DEAD' : 'Attack Boss (-30 Energy)'}
         </Button>
       </View>
 
