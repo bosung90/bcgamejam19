@@ -47,6 +47,11 @@ export default function Classroom({ match }) {
       new Audio(require('sounds').levelUp).play()
     }
   }, [level])
+  useEffect(() => {
+    if (advancingToBoss) {
+      new Audio(require('sounds').rocketLaunch).play()
+    }
+  }, [advancingToBoss])
   return (
     <View fill color="white">
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
