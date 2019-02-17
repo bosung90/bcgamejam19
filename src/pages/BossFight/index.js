@@ -148,14 +148,18 @@ function Character(props) {
       <View absolute alignCenter textCenter left={0} right={0} top={-20} bold color="#FED04A" fontSize={14}>
         {!!props.characterName && props.characterName.toUpperCase()}
       </View>
-      {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />}
-      {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 90, position: 'absolute' }} />}
-      {!!cheekItem.imageUrl && <img src={cheekItem.imageUrl} alt="cheek" style={{ width: 90, position: 'absolute' }} />}
-      {!!mouthItem.imageUrl && <img src={mouthItem.imageUrl} alt="mouth" style={{ width: 90, position: 'absolute' }} />}
-      {!!costumeItem.imageUrl && (
-        <img src={costumeItem.imageUrl} alt="costume" style={{ width: 90, position: 'absolute' }} />
+      {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 100 }} />}
+      {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 100, position: 'absolute' }} />}
+      {!!cheekItem.imageUrl && (
+        <img src={cheekItem.imageUrl} alt="cheek" style={{ width: 100, position: 'absolute' }} />
       )}
-      {!!hairItem.imageUrl && <img src={hairItem.imageUrl} alt="hair" style={{ width: 90, position: 'absolute' }} />}
+      {!!mouthItem.imageUrl && (
+        <img src={mouthItem.imageUrl} alt="mouth" style={{ width: 100, position: 'absolute' }} />
+      )}
+      {!!costumeItem.imageUrl && (
+        <img src={costumeItem.imageUrl} alt="costume" style={{ width: 100, position: 'absolute' }} />
+      )}
+      {!!hairItem.imageUrl && <img src={hairItem.imageUrl} alt="hair" style={{ width: 100, position: 'absolute' }} />}
     </View>
   )
 }
