@@ -47,13 +47,8 @@ export default function Classroom({ match }) {
             Logout
           </button>
         </View>
-        <View>
-          {Object.values(studentsData).map(student => {
-            return <View key={student.id}>{student.characterName}</View>
-          })}
-        </View>
       </View>
-      <View absoluteFill>
+      <View pointerEvents="none" absoluteFill>
         <Select selector={dispatch.user.getId}>
           {userId => {
             const studentsArr = Object.values(studentsData)
@@ -73,7 +68,7 @@ export default function Classroom({ match }) {
 function MyCharacter(props) {
   const skinItem = dispatch.items.getItems()[props.skinId] || {}
   return (
-    <View absolute left={0} right={0} bottom={'33%'} alignCenter>
+    <View pointerEvents="none" absolute left={0} right={0} bottom={'33%'} alignCenter>
       <img src={skinItem.imageUrl} alt="skin" style={{ width: 200 }} />
     </View>
   )
@@ -83,7 +78,7 @@ function Character(props) {
   const skinItem = dispatch.items.getItems()[props.skinId] || {}
 
   return (
-    <View absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
+    <View pointerEvents="none" absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
       <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />
     </View>
   )

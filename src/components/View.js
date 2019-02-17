@@ -171,6 +171,9 @@ export default class View extends React.Component {
         case 'cursor':
           style.push(css({ cursor: props[key] }))
           break
+        case 'pointerEvents':
+          style.push(css({ pointerEvents: props[key] }))
+          break
         case 'fill':
           if (props[key] !== true) {
             style.push(css({ flex: props[key] }))
