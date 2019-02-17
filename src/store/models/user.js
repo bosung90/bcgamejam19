@@ -1,5 +1,9 @@
 export default {
   state: {},
-  reducers: {},
+  reducers: {
+    setUser(state, payload) {
+      return payload
+    },
+  },
   actions: ({ dispatch, getState }) => ({}),
 }
