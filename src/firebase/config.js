@@ -21,15 +21,15 @@ export const getClassroomsCollection = () => firestore.collection('Classrooms')
 export const getClassroomDoc = classroomId => firestore.collection('Classrooms').doc(classroomId)
 export const getUsersCollection = () => firestore.collection('Users')
 export const getUserDocument = userId => firestore.collection('Users').doc(userId)
-export const getStudentsCollection = ({ classCode }) =>
+export const getClassroomStudentsCollection = classroomId =>
   firestore
     .collection('Classrooms')
-    .doc(classCode)
+    .doc(classroomId)
     .collection('Students')
 
-export const getStudentDocument = ({ classCode, studentId }) =>
+export const getStudentDocument = (classroomId, studentId) =>
   firestore
     .collection('Classrooms')
-    .doc(classCode)
+    .doc(classroomId)
     .collection('Students')
     .doc(studentId)
