@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { getClassroomDoc, getClassroomStudentsCollection } from 'firebase/config'
 import { auth } from 'firebase/config'
-import { Select, View } from 'components'
+import { Button, Select, View } from 'components'
 import * as images from 'images'
 import { css } from 'emotion'
 import { dispatch } from 'store'
+
+let eyeIndex = 0
+let mouthIndex = 0
+let cheekIndex = 0
+let hairIndex = 0
+let skinIndex = 0
+let costumeIndex = 0
 
 export default function Classroom({ match }) {
   const [classroomData, setClassroomData] = useState({})
@@ -33,11 +40,10 @@ export default function Classroom({ match }) {
   return (
     <View fill color="white">
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
-      <View fill p={10}>
+      <View p={10}>
         <View row alignCenter>
           Welcome to {classroomData.name}{' '}
-          <button
-            className={styles.logoutButton}
+          <Button
             onClick={() => {
               auth.signOut().then(() => {
                 window.location.href = '/'
@@ -45,9 +51,98 @@ export default function Classroom({ match }) {
             }}
           >
             Logout
-          </button>
+          </Button>
         </View>
       </View>
+      <View p={10}>
+        <View row alignCenter>
+          <Button
+            onClick={() => {
+              const eyeItems = dispatch.items.getItems('eye')
+              const selectedEyeItem = Object.values(eyeItems)[eyeIndex]
+              if (selectedEyeItem) {
+                dispatch.user.setItem('eye', selectedEyeItem.id, match.params.classroomId)
+              } else {
+                dispatch.user.setItem('eye', '', match.params.classroomId)
+              }
+              eyeIndex = (eyeIndex + 1) % Object.keys(eyeItems).length
+            }}
+          >
+            Eye
+          </Button>
+          <Button
+            onClick={() => {
+              const skinItems = dispatch.items.getItems('skin')
+              const selectedSkinItem = Object.values(skinItems)[skinIndex]
+              if (selectedSkinItem) {
+                dispatch.user.setItem('skin', selectedSkinItem.id, match.params.classroomId)
+              } else {
+                dispatch.user.setItem('skin', '', match.params.classroomId)
+              }
+              skinIndex = (skinIndex + 1) % Object.keys(skinItems).length
+            }}
+          >
+            Skin
+          </Button>
+          <Button
+            onClick={() => {
+              const cheekItems = dispatch.items.getItems('cheek')
+              const selectedCheekItem = Object.values(cheekItems)[cheekIndex]
+              if (selectedCheekItem) {
+                dispatch.user.setItem('cheek', selectedCheekItem.id, match.params.classroomId)
+              } else {
+                dispatch.user.setItem('cheek', '', match.params.classroomId)
+              }
+              cheekIndex = (cheekIndex + 1) % (Object.keys(cheekItems).length + 1)
+            }}
+          >
+            Cheek
+          </Button>
+          <Button
+            onClick={() => {
+              const mouthItems = dispatch.items.getItems('mouth')
+              const selectedMouthItem = Object.values(mouthItems)[mouthIndex]
+              if (selectedMouthItem) {
+                dispatch.user.setItem('mouth', selectedMouthItem.id, match.params.classroomId)
+              } else {
+                dispatch.user.setItem('mouth', '', match.params.classroomId)
+              }
+              mouthIndex = (mouthIndex + 1) % Object.keys(mouthItems).length
+            }}
+          >
+            Mouth
+          </Button>
+          <Button
+            onClick={() => {
+              const hairItems = dispatch.items.getItems('hair')
+              const selectedHairItem = Object.values(hairItems)[hairIndex]
+              if (selectedHairItem) {
+                dispatch.user.setItem('hair', selectedHairItem.id, match.params.classroomId)
+              } else {
+                dispatch.user.setItem('hair', '', match.params.classroomId)
+              }
+              hairIndex = (hairIndex + 1) % (Object.keys(hairItems).length + 1)
+            }}
+          >
+            Hair
+          </Button>
+          <Button
+            onClick={() => {
+              const costumeItems = dispatch.items.getItems('costume')
+              const selectedCostumeItem = Object.values(costumeItems)[costumeIndex]
+              if (selectedCostumeItem) {
+                dispatch.user.setItem('costume', selectedCostumeItem.id, match.params.classroomId)
+              } else {
+                dispatch.user.setItem('costume', '', match.params.classroomId)
+              }
+              costumeIndex = (costumeIndex + 1) % (Object.keys(costumeItems).length + 1)
+            }}
+          >
+            Costume
+          </Button>
+        </View>
+      </View>
+
       <View pointerEvents="none" absoluteFill>
         <Select selector={dispatch.user.getId}>
           {userId => {
@@ -118,17 +213,6 @@ const styles = {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    zIndex: -100,
-  }),
-  logoutButton: css({
-    width: 100,
-    height: 36,
-    cursor: 'pointer',
-    backgroundColor: 'purple',
-    color: 'white',
-    borderRadius: 50,
-    fontWeight: 'bold',
-    fontSize: 16,
-    padding: 6,
+    zIndex: -1,
   }),
 }

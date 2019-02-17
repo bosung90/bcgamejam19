@@ -6,8 +6,17 @@ export default {
     },
   },
   actions: ({ dispatch, getState }) => ({
-    getItems() {
-      return getState().items
+    getItems(type) {
+      if (!type) {
+        return getState().items
+      } else {
+        return Object.values(getState().items).reduce((prev, cur) => {
+          if (cur.type === type) {
+            prev[cur.id] = cur
+          }
+          return prev
+        }, {})
+      }
     },
   }),
 }
