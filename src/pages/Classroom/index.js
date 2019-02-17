@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getClassroomDoc, getClassroomStudentsCollection } from 'firebase/config'
 import { auth } from 'firebase/config'
-import { View } from 'components'
+import { Select, View } from 'components'
 import * as images from 'images'
 import { css } from 'emotion'
+import { dispatch } from 'store'
 
 export default function Classroom({ match }) {
   const [classroomData, setClassroomData] = useState({})
@@ -48,10 +49,42 @@ export default function Classroom({ match }) {
         </View>
         <View>
           {Object.values(studentsData).map(student => {
-            return <View>{student.characterName}</View>
+            return <View key={student.id}>{student.characterName}</View>
           })}
         </View>
       </View>
+      <View absoluteFill>
+        <Select selector={dispatch.user.getId}>
+          {userId => {
+            const studentsArr = Object.values(studentsData)
+            return studentsArr.map((student, index) => {
+              if (student.id === userId) {
+                return <MyCharacter key={student.id} skinId={student.skinId} />
+              }
+              return <Character key={student.id} index={index} skinId={student.skinId} />
+            })
+          }}
+        </Select>
+      </View>
+    </View>
+  )
+}
+
+function MyCharacter(props) {
+  const skinItem = dispatch.items.getItems()[props.skinId] || {}
+  return (
+    <View absolute left={0} right={0} bottom={'33%'} alignCenter>
+      <img src={skinItem.imageUrl} alt="skin" style={{ width: 200 }} />
+    </View>
+  )
+}
+
+function Character(props) {
+  const skinItem = dispatch.items.getItems()[props.skinId] || {}
+
+  return (
+    <View absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
+      <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />
     </View>
   )
 }
