@@ -3,7 +3,7 @@ import { getClassroomDoc } from 'firebase/config'
 import { auth } from 'firebase/config'
 import { css } from 'emotion'
 
-export default function Classroom({ match }) {
+export default function Teachers({ match }) {
   const [classroomData, setClassroomData] = useState({})
   useEffect(() => {
     if (match.params.classroomId) {
