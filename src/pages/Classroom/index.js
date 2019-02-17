@@ -69,7 +69,7 @@ export default function Classroom({ match }) {
             alt="purple circle button"
           />
           <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-54} bottom={-14} bold>
-            {Math.floor(classroomData.xp / 1001) + 1}
+            {Math.floor(classroomData.xp / 1001) + 1 || 1}
           </View>
           {Math.floor(classroomData.xp / 1001) + 1 >= 10 && (
             <Redirect to={`/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`} />
