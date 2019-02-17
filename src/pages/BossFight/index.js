@@ -126,7 +126,13 @@ export default function BossFight({ match }) {
           {userId => {
             return Object.values(studentsData).map((student, index) => {
               return (
-                <Character key={student.id} isAttack={isAttack && student.id === userId} index={index} {...student} />
+                <Character
+                  key={student.id}
+                  isAttack={isAttack && student.id === userId}
+                  index={index}
+                  {...student}
+                  isBossDead={classroomData.bossCurrentHealth <= 0}
+                />
               )
             })
           }}
@@ -148,6 +154,7 @@ function Character(props) {
 
   return (
     <View
+      className={props.isBossDead && styles.bounce}
       pointerEvents="none"
       absolute
       left={isAttack ? '50%' : 5 + 8 * (props.index % 8) + '%'}
@@ -200,6 +207,17 @@ const styles = {
       },
       '50%': {
         transform: 'scaleX(1.05) scaleY(1.05)',
+      },
+    },
+  }),
+  bounce: css({
+    animation: 'bounce 0.5s infinite',
+    '@keyframes bounce': {
+      '0%': {
+        transform: 'translateY(0)',
+      },
+      '50%': {
+        transform: 'translateY(-50px)',
       },
     },
   }),
