@@ -18,6 +18,7 @@ export const DELETE_FIELD_VALUE = firebase.firestore.FieldValue.delete()
 export { firestore }
 
 export const getClassroomsCollection = () => firestore.collection('Classrooms')
+export const getClassroomDoc = classroomId => firestore.collection('Classrooms').doc(classroomId)
 export const getUsersCollection = () => firestore.collection('Users')
 export const getUserDocument = userId => firestore.collection('Users').doc(userId)
 export const getStudentsCollection = ({ classCode }) =>

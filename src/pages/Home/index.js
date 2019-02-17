@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import { auth } from 'firebase/config'
+import { auth, getUserDocument } from 'firebase/config'
 import { View } from 'components'
+import { isEmpty } from 'lodash'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
+  const [redirectClassroom, setRedirectClassroom] = useState()
   const [, forceUpdate] = useState()
   useEffect(() => {
     return auth.onAuthStateChanged(user => {
       setLoading(false)
       if (user) {
+        console.log(user.uid)
+        getUserDocument(user.uid)
+          .get()
+          .then(doc => {
+            const userData = doc.data() || {}
+            if (!isEmpty(userData.joinedClasses)) {
+              setRedirectClassroom('/classroom/' + Object.keys(userData.joinedClasses)[0])
+            }
+          })
       }
     })
   }, [])
@@ -22,6 +33,7 @@ export default function Home() {
         <>
           {auth.currentUser ? (
             <View fill>
+              {!!redirectClassroom && <Redirect to={redirectClassroom} />}
               <View row>
                 Welcome {auth.currentUser.email.split('@')[0]}
                 <button
