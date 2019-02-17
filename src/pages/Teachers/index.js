@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getClassroomDoc, getClassroomStudentsCollection } from 'firebase/config'
-import { auth } from 'firebase/config'
-import { View } from 'components'
+import { Button, View } from 'components'
 import * as images from 'images'
 import { css } from 'emotion'
 
@@ -32,25 +31,26 @@ export default function Teachers({ match }) {
   return (
     <View fill color="white">
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
-      <View fill p={10}>
-        <View row alignCenter>
-          You are a teacher managing classroom ({classroomData.name})
-          <button
-            className={styles.logoutButton}
-            onClick={() => {
-              auth.signOut().then(() => {
-                window.location.href = '/'
-              })
-            }}
-          >
-            Logout
-          </button>
-        </View>
-        <View>
-          {Object.values(studentsData).map(student => {
-            return <View>{student.characterName}</View>
-          })}
-        </View>
+      <View center fill>
+        <Button
+          onClick={() => {
+            getClassroomDoc(match.params.classroomId).update({
+              bossCurrentHealth: 1000,
+            })
+          }}
+        >
+          Reset Boss
+        </Button>
+        <View h={50} />
+        <Button
+          onClick={() =>
+            getClassroomDoc(match.params.classroomId).update({
+              xp: 0,
+            })
+          }
+        >
+          Reset Class XP
+        </Button>
       </View>
     </View>
   )

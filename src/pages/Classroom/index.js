@@ -41,6 +41,17 @@ export default function Classroom({ match }) {
       }
     }
   }, [])
+  const level = Math.floor(classroomData.xp / 1001) + 1 || 1
+  useEffect(() => {
+    if (level > 1) {
+      new Audio(require('sounds').levelUp).play()
+    }
+  }, [level])
+  useEffect(() => {
+    if (advancingToBoss) {
+      new Audio(require('sounds').rocketLaunch).play()
+    }
+  }, [advancingToBoss])
   return (
     <View fill color="white">
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
@@ -72,7 +83,7 @@ export default function Classroom({ match }) {
             alt="purple circle button"
           />
           <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-54} bottom={-14} bold>
-            {Math.floor(classroomData.xp / 1001) + 1 || 1}
+            {level}
           </View>
           {!isBossEnabled && Math.floor(classroomData.xp / 1001) + 1 >= 3 && setIsBossEnabled(true)}
           <img

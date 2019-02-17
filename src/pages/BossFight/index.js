@@ -49,6 +49,11 @@ export default function BossFight({ match }) {
       }
     }
   }, [])
+  useEffect(() => {
+    if (classroomData.bossCurrentHealth <= 0) {
+      new Audio(require('sounds').bossDeath).play()
+    }
+  }, [classroomData.bossCurrentHealth <= 0])
   return (
     <View fill color="white">
       <View bc={'white'} bw={2} br={40} h={35} m={15}>
