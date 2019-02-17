@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import * as images from 'images'
 import { css } from 'emotion'
 
-const EMAIL_DOMAIN = '@vampster.ca'
+const EMAIL_DOMAIN = '@astrohamsters.tech'
 
 export default function Login() {
   const [username, setUsername] = useState('')
