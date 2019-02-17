@@ -49,11 +49,12 @@ export default function Login() {
   }
   return (
     <View fill>
-      <img src={images.header} alt="header" style={{ height: '50%', width: '100%', resizeMode: 'cover' }} />
+      <img src={images.header} alt="header" style={{ height: '45%', width: '100%', resizeMode: 'cover' }} />
       {!!auth.currentUser && <Redirect to="/" />}
+      <div className={styles.bannertext}><h1>AstroHamsters</h1></div>
       <View className={styles.position}>
       <View w={300} className={styles.positionbox}>
-        <div style={{fontWeight: 'bold', paddingLeft: 10}}>Username</div>
+        <div style={{fontWeight: 'bold', paddingLeft: 10, alignItems: 'flex-start'}}>Username</div>
         <input
           className={styles.input}
           autoFocus
@@ -176,10 +177,10 @@ export default function Login() {
 const styles = {
   position: css({
    alignItems: 'center',
-   marginTop: 30,
+   marginTop: 15,
   }),
   positionbox: css({
-    alignItems: 'flex-start',
+    //alignItems: 'flex-start',
     marginBottom: '15',
   }),
   input: css({
@@ -192,6 +193,11 @@ const styles = {
     borderRadius: 30,
     fontSize: 18,
   }),
+  bannertext: css({
+  position: 'relative',
+  textAlign: 'center',
+  color: 'black',
+  }),
 
   button: css({
     margin: 5,
@@ -203,7 +209,7 @@ const styles = {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-    width: '60%',
+    width: '80%',
   }),
 
 }
