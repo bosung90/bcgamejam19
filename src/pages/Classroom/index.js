@@ -43,7 +43,7 @@ export default function Classroom({ match }) {
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
       <View p={10}>
         <View row alignCenter>
-          Welcome to {classroomData.name}{' '}
+          <View mr={20}>Welcome to {classroomData.name} </View>
           <Button
             onClick={() => {
               auth.signOut().then(() => {
@@ -189,15 +189,19 @@ export default function Classroom({ match }) {
 
       <View pointerEvents="none" absoluteFill>
         <Select selector={dispatch.user.getId}>
-          {userId => {
-            const studentsArr = Object.values(studentsData)
-            return studentsArr.map((student, index) => {
-              if (student.id === userId) {
-                return <MyCharacter key={student.id} {...student} />
-              }
-              return <Character key={student.id} index={index} {...student} />
-            })
-          }}
+          {userId => <MyCharacter key={userId} {...studentsData[userId]} />}
+        </Select>
+        <Select selector={dispatch.user.getId}>
+          {userId =>
+            Object.values(studentsData)
+              .reduce((prev, cur) => {
+                if (cur.id !== userId) {
+                  prev.push(cur)
+                }
+                return prev
+              }, [])
+              .map((student, index) => <Character key={student.id} index={index} {...student} />)
+          }
         </Select>
       </View>
     </View>
@@ -213,6 +217,9 @@ function MyCharacter(props) {
   const hairItem = dispatch.items.getItems()[props.hairId] || {}
   return (
     <View className={styles.animation} pointerEvents="none" absolute left={0} right={0} bottom={'33%'} alignCenter>
+      <View absolute top={-20} bold color="#FED04A" fontSize={26}>
+        {!!props.characterName && props.characterName.toUpperCase()}
+      </View>
       {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 200 }} />}
       {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 200, position: 'absolute' }} />}
       {!!cheekItem.imageUrl && (
@@ -239,6 +246,9 @@ function Character(props) {
 
   return (
     <View pointerEvents="none" absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
+      <View absolute alignCenter textCenter left={0} right={0} top={-20} bold color="#FED04A" fontSize={18}>
+        {!!props.characterName && props.characterName.toUpperCase()}
+      </View>
       {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />}
       {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 90, position: 'absolute' }} />}
       {!!cheekItem.imageUrl && <img src={cheekItem.imageUrl} alt="cheek" style={{ width: 90, position: 'absolute' }} />}
