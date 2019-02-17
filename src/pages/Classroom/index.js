@@ -5,6 +5,7 @@ import { Button, Select, View } from 'components'
 import * as images from 'images'
 import { css } from 'emotion'
 import { dispatch } from 'store'
+import { Redirect } from 'react-router-dom'
 
 let eyeIndex = 0
 let mouthIndex = 0
@@ -70,6 +71,9 @@ export default function Classroom({ match }) {
           <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-54} bottom={-14} bold>
             {Math.floor(classroomData.xp / 1001) + 1}
           </View>
+          {Math.floor(classroomData.xp / 1001) + 1 >= 10 && (
+            <Redirect to={`/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`} />
+          )}
           <img
             style={{
               width: Math.min((classroomData.xp % 1000.0000001) / 1000 || 0, 1) * 100 + '%',

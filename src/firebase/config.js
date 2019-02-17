@@ -35,3 +35,4 @@ export const getClassroomStudentDocument = (classroomId, studentId) =>
     .doc(studentId)
 
 export const getItemsCollection = () => firestore.collection('Items')
+export const getBossDoc = bossId => firestore.collection('Bosses').doc(bossId)

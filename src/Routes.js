@@ -10,6 +10,7 @@ export default function Routes() {
         <Route path="/login" exact component={pages.Login} />
         <Route path="/classroom/:classroomId" exact component={pages.Classroom} />
         <Route path="/teachers/:classroomId" exact component={pages.Teachers} />
+        <Route path="/classroom/:classroomId/bossFight/:bossId" exact component={pages.BossFight} />
       </Switch>
     </Router>
   )

@@ -174,6 +174,9 @@ export default class View extends React.Component {
         case 'pointerEvents':
           style.push(css({ pointerEvents: props[key] }))
           break
+        case 'zIndex':
+          style.push(css({ zIndex: props[key] }))
+          break
         case 'fill':
           if (props[key] !== true) {
             style.push(css({ flex: props[key] }))
