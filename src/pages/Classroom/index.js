@@ -71,6 +71,7 @@ export default function Classroom({ match }) {
               width: Math.min(classroomData.xp / classroomData.maxXp || 0, 1) * 100 + '%',
               height: 40,
               borderRadius: 50,
+              transition: 'width 2s',
             }}
             src={images.yellowBar}
             alt="yellow health bar"
