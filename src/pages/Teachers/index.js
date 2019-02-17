@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { getClassroomDoc, getClassroomStudentsCollection } from 'firebase/config'
+import {
+  getClassroomDoc,
+  getClassroomStudentsCollection,
+  getClassroomStudentDocument,
+  getUsersCollection,
+  getUserDocument,
+} from 'firebase/config'
 import { Button, View } from 'components'
 import * as images from 'images'
 import { css } from 'emotion'
@@ -50,6 +56,27 @@ export default function Teachers({ match }) {
           }
         >
           Reset Class XP
+        </Button>
+        <Button
+          onClick={() => {
+            getClassroomStudentsCollection(match.params.classroomId)
+              .get()
+              .then(docs => {
+                docs.forEach(doc => {
+                  getClassroomStudentDocument(match.params.classroomId, doc.id).delete()
+                })
+              })
+
+            getUsersCollection()
+              .get()
+              .then(docs => {
+                docs.forEach(doc => {
+                  getUserDocument(doc.id).delete()
+                })
+              })
+          }}
+        >
+          Reset Users and Students
         </Button>
       </View>
     </View>
