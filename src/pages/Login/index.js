@@ -4,6 +4,8 @@ import 'App.css'
 import { View } from 'components'
 import { auth, getUserDocument } from 'firebase/config'
 import { Redirect } from 'react-router-dom'
+import * as images from 'images'
+import { css } from 'emotion'
 
 const EMAIL_DOMAIN = '@vampster.ca'
 
@@ -47,125 +49,151 @@ export default function Login() {
   }
   return (
     <View fill>
-      <div className="App">
-        <header className="App-header">
-          {!!auth.currentUser && <Redirect to="/" />}
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Username</p>
-          <input
-            autoFocus
-            ref={usernameInput}
-            disabled={usernameExistConfirmed || usernameDontExistConfirmed || verifyingUsername || loggingIn}
-            value={username}
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                checkUsername()
-              }
-            }}
-            onChange={e => setUsername(e.target.value.trim().toLocaleLowerCase())}
-          />
-          {(usernameExistConfirmed || usernameDontExistConfirmed) && (
-            <>
-              <p>Password</p>
-              <input
-                ref={passInput}
-                disabled={loggingIn}
-                value={password}
-                type="password"
-                onChange={e => setPassword(e.target.value)}
-              />
-            </>
-          )}
-          {usernameDontExistConfirmed && (
-            <>
-              <p>Name</p>
-              <input ref={nameInput} value={name} onChange={e => setName(e.target.value)} />
-            </>
-          )}
+      <img src={images.header} alt="header" style={{ height: '50%', width: '100%', resizeMode: 'cover' }} />
+      {!!auth.currentUser && <Redirect to="/" />}
+      <View w={300}>
+        <div>Username</div>
+        <input
+          className={styles.input}
+          autoFocus
+          ref={usernameInput}
+          disabled={usernameExistConfirmed || usernameDontExistConfirmed || verifyingUsername || loggingIn}
+          value={username}
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              checkUsername()
+            }
+          }}
+          onChange={e => setUsername(e.target.value.trim().toLocaleLowerCase())}
+        />
+        {(usernameExistConfirmed || usernameDontExistConfirmed) && (
+          <>
+            <div>Password</div>
+            <input
+              className={styles.input}
+              ref={passInput}
+              disabled={loggingIn}
+              value={password}
+              type="password"
+              onChange={e => setPassword(e.target.value)}
+            />
+          </>
+        )}
+        {usernameDontExistConfirmed && (
+          <>
+            <div>Name</div>
+            <input className={styles.input} ref={nameInput} value={name} onChange={e => setName(e.target.value)} />
+          </>
+        )}
 
-          {!usernameExistConfirmed && !usernameDontExistConfirmed && (
+        {!usernameExistConfirmed && !usernameDontExistConfirmed && (
+          <button
+            className={styles.button}
+            onClick={() => {
+              checkUsername()
+            }}
+            disabled={verifyingUsername}
+          >
+            {verifyingUsername ? 'Checking...' : 'Next'}
+          </button>
+        )}
+        {usernameExistConfirmed && (
+          <button
+            className={styles.button}
+            disabled={loggingIn}
+            onClick={() => {
+              setIsLoggingIn(true)
+              auth
+                .signInWithEmailAndPassword(username + EMAIL_DOMAIN, password)
+                .then(res => {})
+                .catch(e => {
+                  alert(e.message)
+                })
+                .finally(() => {
+                  setIsLoggingIn(false)
+                })
+            }}
+          >
+            {loggingIn ? 'Logging In...' : 'Login'}
+          </button>
+        )}
+        {usernameDontExistConfirmed && (
+          <>
             <button
-              onClick={() => {
-                checkUsername()
-              }}
-              disabled={verifyingUsername}
-            >
-              {verifyingUsername ? 'Checking...' : 'Next'}
-            </button>
-          )}
-          {usernameExistConfirmed && (
-            <button
+              className={styles.button}
               disabled={loggingIn}
               onClick={() => {
+                if (!name.trim()) {
+                  alert('name cannot be empty')
+                  return
+                }
                 setIsLoggingIn(true)
                 auth
-                  .signInWithEmailAndPassword(username + EMAIL_DOMAIN, password)
-                  .then(res => {})
+                  .createUserWithEmailAndPassword(username + EMAIL_DOMAIN, password)
+                  .then(res => {
+                    const uid = res.user.uid
+                    getUserDocument(uid).set({
+                      userName: username,
+                      name: name,
+                      id: uid,
+                      joinedClasses: {},
+                    })
+                  })
                   .catch(e => {
                     alert(e.message)
                   })
                   .finally(() => {
+                    setVerifyingUsername(false)
+                    setUsernameExistConfirmed(false)
+                    setUsernameDontExistConfirmed(false)
                     setIsLoggingIn(false)
                   })
               }}
             >
-              {loggingIn ? 'Logging In...' : 'Login'}
+              {loggingIn ? 'Registering...' : 'Register'}
             </button>
-          )}
-          {usernameDontExistConfirmed && (
-            <>
-              <button
-                disabled={loggingIn}
-                onClick={() => {
-                  if (!name.trim()) {
-                    alert('name cannot be empty')
-                    return
-                  }
-                  setIsLoggingIn(true)
-                  auth
-                    .createUserWithEmailAndPassword(username + EMAIL_DOMAIN, password)
-                    .then(res => {
-                      const uid = res.user.uid
-                      getUserDocument(uid).set({
-                        userName: username,
-                        name: name,
-                        id: uid,
-                        joinedClasses: {},
-                      })
-                    })
-                    .catch(e => {
-                      alert(e.message)
-                    })
-                    .finally(() => {
-                      setVerifyingUsername(false)
-                      setUsernameExistConfirmed(false)
-                      setUsernameDontExistConfirmed(false)
-                      setIsLoggingIn(false)
-                    })
-                }}
-              >
-                {loggingIn ? 'Registering...' : 'Register'}
-              </button>
-              <button
-                onClick={() => {
-                  setVerifyingUsername(false)
-                  setUsernameExistConfirmed(false)
-                  setUsernameDontExistConfirmed(false)
-                  setTimeout(() => {
-                    usernameInput.current && usernameInput.current.focus()
-                  }, 0)
-                }}
-              >
-                {'change username'}
-              </button>
-            </>
-          )}
+            <button
+              className={styles.button}
+              onClick={() => {
+                setVerifyingUsername(false)
+                setUsernameExistConfirmed(false)
+                setUsernameDontExistConfirmed(false)
+                setTimeout(() => {
+                  usernameInput.current && usernameInput.current.focus()
+                }, 0)
+              }}
+            >
+              {'Change Username'}
+            </button>
+          </>
+        )}
 
-          {/* <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+        {/* <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
               Learn React
             </a> */}
-        </header>
-      </div>
+      </View>
     </View>
   )
+}
+
+const styles = {
+  input: css({
+    margin: 4,
+    paddingLeft: 10,
+    height: 30,
+    borderWidth: 3,
+    borderColor: '#7235A1',
+    borderStyle: 'solid',
+    borderRadius: 30,
+    fontSize: 18,
+  }),
+  button: css({
+    margin: 4,
+    height: 36,
+    backgroundColor: '#7235A1',
+    borderRadius: 30,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+  }),
 }
