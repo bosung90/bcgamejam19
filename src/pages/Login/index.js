@@ -51,8 +51,9 @@ export default function Login() {
     <View fill>
       <img src={images.header} alt="header" style={{ height: '50%', width: '100%', resizeMode: 'cover' }} />
       {!!auth.currentUser && <Redirect to="/" />}
-      <View w={300}>
-        <div>Username</div>
+      <View className={styles.position}>
+      <View w={300} className={styles.positionbox}>
+        <div style={{fontWeight: 'bold', paddingLeft: 10}}>Username</div>
         <input
           className={styles.input}
           autoFocus
@@ -68,7 +69,7 @@ export default function Login() {
         />
         {(usernameExistConfirmed || usernameDontExistConfirmed) && (
           <>
-            <div>Password</div>
+            <div style={{fontWeight: 'bold', paddingLeft: 10}}>Password</div>
             <input
               className={styles.input}
               ref={passInput}
@@ -81,11 +82,10 @@ export default function Login() {
         )}
         {usernameDontExistConfirmed && (
           <>
-            <div>Name</div>
+            <div style={{fontWeight: 'bold', paddingLeft: 10}}>Name</div>
             <input className={styles.input} ref={nameInput} value={name} onChange={e => setName(e.target.value)} />
           </>
         )}
-
         {!usernameExistConfirmed && !usernameDontExistConfirmed && (
           <button
             className={styles.button}
@@ -172,11 +172,20 @@ export default function Login() {
               Learn React
             </a> */}
       </View>
+      </View>
     </View>
   )
 }
 
 const styles = {
+  position: css({
+   alignItems: 'center',
+   marginTop: 30,
+  }),
+  positionbox: css({
+    alignItems: 'flex-start',
+    marginBottom: '15',
+  }),
   input: css({
     margin: 4,
     paddingLeft: 10,
@@ -187,13 +196,18 @@ const styles = {
     borderRadius: 30,
     fontSize: 18,
   }),
+
   button: css({
-    margin: 4,
+    margin: 5,
+    marginTop: 10,
+    marginLeft:25,
     height: 36,
     backgroundColor: '#7235A1',
     borderRadius: 30,
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+    width: '60%',
   }),
+
 }
