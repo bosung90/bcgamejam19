@@ -1,19 +1,34 @@
 import firebase from 'firebase'
 const config = {
-  apiKey: 'AIzaSyDCLq2UNIWHHOvPnzxqjLcyH-Yal0xkGys',
-  authDomain: 'bcgamejam19.firebaseapp.com',
-  databaseURL: 'https://bcgamejam19.firebaseio.com',
-  projectId: 'bcgamejam19',
-  storageBucket: 'bcgamejam19.appspot.com',
-  messagingSenderId: '460701722958',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABSE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 }
 firebase.initializeApp(config)
 
-const auth = firebase.auth()
+export const auth = firebase.auth()
 
 const firestore = firebase.firestore()
-firestore.settings({ timestampsInSnapshots: true })
 
-const DELETE_FIELD_VALUE = firebase.firestore.FieldValue.delete()
+export const DELETE_FIELD_VALUE = firebase.firestore.FieldValue.delete()
 
-export { firestore, auth, DELETE_FIELD_VALUE }
+export { firestore }
+
+export const getClassroomsCollection = () => firestore.collection('Classrooms')
+export const getUsersCollection = () => firestore.collection('Users')
+export const getUserDocument = userId => firestore.collection('Users').doc(userId)
+export const getStudentsCollection = ({ classCode }) =>
+  firestore
+    .collection('Classrooms')
+    .doc(classCode)
+    .collection('Students')
+
+export const getStudentDocument = ({ classCode, studentId }) =>
+  firestore
+    .collection('Classrooms')
+    .doc(classCode)
+    .collection('Students')
+    .doc(studentId)

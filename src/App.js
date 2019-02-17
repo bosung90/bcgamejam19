@@ -1,33 +1,21 @@
-import React, { Component } from 'react'
+import React, { useState, useRef } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import { Provider } from 'react-redux'
+import { View } from 'components'
 import { store, dispatch } from 'store'
-import Select from 'cf-select'
-import { Home } from 'pages'
+import { auth, getUserDocument } from 'firebase/config'
+import { Redirect } from 'react-router-dom'
+import Routes from 'Routes'
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <button onClick={() => dispatch.count.increment()}>increment</button>
-            <Home />
-            <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-              {/* <Select selector={() => dispatch.count.getCount()} />
-              {dispatch.count.getCount()} */}
-              Learn React
-            </a>
-          </header>
-        </div>
-      </Provider>
-    )
-  }
+const EMAIL_DOMAIN = '@vhamster.ca'
+
+function App() {
+  return (
+    <Provider store={store}>
+      <Routes />
+    </Provider>
+  )
 }
 
 export default App
