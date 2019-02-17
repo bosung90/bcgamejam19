@@ -53,7 +53,7 @@ export default function Home() {
               <View alignCenter>
                 <View>
                   <View ml={10}>Enter Class Code</View>
-                  <Input style={{ width: 300, height: 36, marginBottom: 40 }} value="abcdefg" />
+                  <Input style={{ width: 300, height: 36, marginBottom: 40 }} value="bcgamejam2019" />
                 </View>
 
                 <Button
@@ -69,7 +69,7 @@ export default function Home() {
                           Authorization: token,
                         },
                         body: JSON.stringify({
-                          classCode: 'abcdefg',
+                          classCode: 'bcgamejam2019',
                         }),
                       })
                         .then(result => result.json())
