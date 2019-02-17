@@ -298,7 +298,7 @@ function Character(props) {
   const hairItem = dispatch.items.getItems()[props.hairId] || {}
 
   return (
-    <View pointerEvents="none" absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
+    <View pointerEvents="none" absolute left={5 + 8 * (props.index % 9) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
       <View absolute alignCenter textCenter left={0} right={0} top={-20} bold color="#FED04A" fontSize={14}>
         {!!props.characterName && props.characterName.toUpperCase()}
       </View>

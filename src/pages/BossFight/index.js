@@ -108,6 +108,7 @@ export default function BossFight({ match }) {
         <Button
           className={styles.animation}
           onClick={() => {
+            new Audio(require('sounds').attack).play()
             setIsAttack(true)
             clearTimeout(timeoutId)
             timeoutId = setTimeout(() => {
@@ -158,7 +159,7 @@ function Character(props) {
       className={props.isBossDead && styles.bounce}
       pointerEvents="none"
       absolute
-      left={isAttack ? '50%' : 5 + 8 * (props.index % 8) + '%'}
+      left={isAttack ? '50%' : 5 + 8 * (props.index % 9) + '%'}
       bottom={isAttack ? '50%' : props.index < 9 ? '20%' : '5%'}
       style={{ transition: 'all .3s ease' }}
     >
