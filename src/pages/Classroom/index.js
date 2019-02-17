@@ -57,6 +57,7 @@ export default function Classroom({ match }) {
       <View w="100%" alignCenter>
         <View w="50%" bc="#7330A3" br={50} bw={4} relative>
           <img
+            className={styles.animation}
             style={{
               position: 'absolute',
               width: 60,
@@ -77,8 +78,8 @@ export default function Classroom({ match }) {
           />
         </View>
       </View>
-      <View p={10}>
-        <View row alignCenter>
+      <View p={10} alignCenter>
+        <View row>
           <Button
             onClick={() => {
               const eyeItems = dispatch.items.getItems('eye')
@@ -166,7 +167,7 @@ export default function Classroom({ match }) {
         </View>
       </View>
       <View absolute bottom={30} left={0} right={0} alignCenter>
-        <Button>Complete Assignments</Button>
+        <Button className={styles.animation}>Complete Assignments</Button>
       </View>
 
       <View pointerEvents="none" absoluteFill>
