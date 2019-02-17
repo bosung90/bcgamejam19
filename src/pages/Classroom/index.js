@@ -261,18 +261,12 @@ function MyCharacter(props) {
       <View absolute top={-20} bold color="#FED04A" fontSize={26}>
         {!!props.characterName && props.characterName.toUpperCase()}
       </View>
-      {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 300 }} />}
-      {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 300, position: 'absolute' }} />}
-      {!!cheekItem.imageUrl && (
-        <img src={cheekItem.imageUrl} alt="cheek" style={{ width: 300, position: 'absolute' }} />
-      )}
-      {!!mouthItem.imageUrl && (
-        <img src={mouthItem.imageUrl} alt="mouth" style={{ width: 300, position: 'absolute' }} />
-      )}
-      {!!costumeItem.imageUrl && (
-        <img src={costumeItem.imageUrl} alt="costume" style={{ width: 300, position: 'absolute' }} />
-      )}
-      {!!hairItem.imageUrl && <img src={hairItem.imageUrl} alt="hair" style={{ width: 300, position: 'absolute' }} />}
+      {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ minWidth: 150, width: '20%' }} />}
+      {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" className={styles.myCharacter} />}
+      {!!cheekItem.imageUrl && <img src={cheekItem.imageUrl} alt="cheek" className={styles.myCharacter} />}
+      {!!mouthItem.imageUrl && <img src={mouthItem.imageUrl} alt="mouth" className={styles.myCharacter} />}
+      {!!costumeItem.imageUrl && <img src={costumeItem.imageUrl} alt="costume" className={styles.myCharacter} />}
+      {!!hairItem.imageUrl && <img src={hairItem.imageUrl} alt="hair" className={styles.myCharacter} />}
     </View>
   )
 }
@@ -313,6 +307,11 @@ const styles = {
     height: '100%',
     resizeMode: 'cover',
     zIndex: -1,
+  }),
+  myCharacter: css({
+    minWidth: 150,
+    width: '20%',
+    position: 'absolute',
   }),
   animation: css({
     animation: 'pulsate 1s infinite',
