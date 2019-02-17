@@ -1,16 +1,14 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { FirebaseSync } from 'components'
+import { useFirebaseSync } from 'hooks'
 import { store } from 'store'
 import Routes from 'Routes'
 
 function App() {
+  useFirebaseSync()
   return (
     <Provider store={store}>
-      <>
-        <FirebaseSync />
-        <Routes />
-      </>
+      <Routes />
     </Provider>
   )
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { dispatch } from 'store'
 import { auth } from 'firebase/config'
 
-export default function FirebaseSync() {
+export default function useFirebaseSync() {
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged(user => {
       if (user) {
