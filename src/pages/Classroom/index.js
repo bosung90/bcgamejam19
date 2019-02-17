@@ -246,7 +246,7 @@ function Character(props) {
 
   return (
     <View pointerEvents="none" absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
-      <View absolute alignCenter textCenter left={0} right={0} top={-20} bold color="#FED04A" fontSize={18}>
+      <View absolute alignCenter textCenter left={0} right={0} top={-20} bold color="#FED04A" fontSize={14}>
         {!!props.characterName && props.characterName.toUpperCase()}
       </View>
       {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />}

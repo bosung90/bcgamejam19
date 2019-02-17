@@ -145,6 +145,9 @@ function Character(props) {
       bottom={isAttack ? '50%' : props.index < 9 ? '20%' : '5%'}
       style={{ transition: 'all .3s ease' }}
     >
+      <View absolute alignCenter textCenter left={0} right={0} top={-20} bold color="#FED04A" fontSize={14}>
+        {!!props.characterName && props.characterName.toUpperCase()}
+      </View>
       {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />}
       {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 90, position: 'absolute' }} />}
       {!!cheekItem.imageUrl && <img src={cheekItem.imageUrl} alt="cheek" style={{ width: 90, position: 'absolute' }} />}
