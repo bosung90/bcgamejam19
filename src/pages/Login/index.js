@@ -51,11 +51,9 @@ export default function Login() {
     <View fill>
       <img src={images.header} alt="header" style={{ maxHeight: '45%', maxWidth: '130%', objectFit: 'cover' }} />
       {!!auth.currentUser && <Redirect to="/" />}
-      <div className={styles.bannertext}>
-        <h1>AstroHamsters</h1>
-      </div>
       <View className={styles.position}>
         <View w={300} className={styles.positionbox}>
+          <img src={images.logoBlack} alt="header" style={{ width: '100%', paddingTop: 15, paddingBottom: 15 }} />
           <div style={{ fontWeight: 'bold', paddingLeft: 10, alignItems: 'flex-start' }}>Username</div>
           <Input
             autoFocus
