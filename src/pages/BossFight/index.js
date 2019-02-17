@@ -17,15 +17,18 @@ export default function BossFight({ match }) {
   const [classroomData, setClassroomData] = useState({})
   const [bossData, setBossData] = useState({})
   const [studentsData, setStudentsData] = useState({})
+  const [isAttack, setIsAttack] = useState(false)
+  let timeoutId = null
   useEffect(() => {
     if (match.params.classroomId) {
       let unsubscribeBoss = null
       const unsubsClassroom = getClassroomDoc(match.params.classroomId).onSnapshot(doc => {
-        const classroomData = doc.data() || {}
-        classroomData.id = doc.id
-        setClassroomData(classroomData)
+        const newClassroomData = doc.data() || {}
+        newClassroomData.id = doc.id
 
-        unsubscribeBoss = getBossDoc(classroomData.bossId).onSnapshot(doc => {
+        setClassroomData(newClassroomData)
+
+        unsubscribeBoss = getBossDoc(newClassroomData.bossId).onSnapshot(doc => {
           const bossD = doc.data() || {}
           bossD.id = doc.id
           setBossData(bossD)
@@ -60,7 +63,7 @@ export default function BossFight({ match }) {
           }}
         />
       </View>
-      <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
+      <img className={styles.classroomBG} src={images.bossFightBG} alt="classroom background" />
       <View absolute left={30} bottom={30} zIndex={2}>
         <Button
           onClick={() => {
@@ -95,6 +98,11 @@ export default function BossFight({ match }) {
         <Button
           className={styles.animation}
           onClick={() => {
+            setIsAttack(true)
+            clearTimeout(timeoutId)
+            timeoutId = setTimeout(() => {
+              setIsAttack(false)
+            }, 300)
             getClassroomDoc(match.params.classroomId).update({
               bossCurrentHealth: classroomData.bossCurrentHealth - 10,
             })
@@ -105,9 +113,15 @@ export default function BossFight({ match }) {
       </View>
 
       <View pointerEvents="none" absoluteFill>
-        {Object.values(studentsData).map((student, index) => {
-          return <Character key={student.id} index={index} {...student} />
-        })}
+        <Select selector={dispatch.user.getId}>
+          {userId => {
+            return Object.values(studentsData).map((student, index) => {
+              return (
+                <Character key={student.id} isAttack={isAttack && student.id === userId} index={index} {...student} />
+              )
+            })
+          }}
+        </Select>
       </View>
     </View>
   )
@@ -121,8 +135,16 @@ function Character(props) {
   const costumeItem = dispatch.items.getItems()[props.costumeId] || {}
   const hairItem = dispatch.items.getItems()[props.hairId] || {}
 
+  const isAttack = props.isAttack
+
   return (
-    <View pointerEvents="none" absolute left={5 + 8 * (props.index % 8) + '%'} bottom={props.index < 9 ? '20%' : '5%'}>
+    <View
+      pointerEvents="none"
+      absolute
+      left={isAttack ? '50%' : 5 + 8 * (props.index % 8) + '%'}
+      bottom={isAttack ? '50%' : props.index < 9 ? '20%' : '5%'}
+      style={{ transition: 'all .3s ease' }}
+    >
       {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 90 }} />}
       {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 90, position: 'absolute' }} />}
       {!!cheekItem.imageUrl && <img src={cheekItem.imageUrl} alt="cheek" style={{ width: 90, position: 'absolute' }} />}
