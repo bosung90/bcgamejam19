@@ -86,7 +86,8 @@ export default function BossFight({ match }) {
       </View>
       <View alignCenter>
         <View ml={50} bold color="yellow" fontSize={24}>
-          {bossData.name}
+          {classroomData.bossCurrentHealth <= 0 && 'Congratulations '} {bossData.name}{' '}
+          {classroomData.bossCurrentHealth <= 0 && ' is now dead'}
         </View>
 
         <img

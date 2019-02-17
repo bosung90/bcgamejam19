@@ -17,6 +17,8 @@ let costumeIndex = 0
 export default function Classroom({ match }) {
   const [classroomData, setClassroomData] = useState({})
   const [studentsData, setStudentsData] = useState({})
+  const [isDoneAssignment, setIsDoneAssignment] = useState(false)
+  const [isBossEnabled, setIsBossEnabled] = useState(false)
   useEffect(() => {
     if (match.params.classroomId) {
       const unsubsClassroom = getClassroomDoc(match.params.classroomId).onSnapshot(doc => {
@@ -71,9 +73,7 @@ export default function Classroom({ match }) {
           <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-54} bottom={-14} bold>
             {Math.floor(classroomData.xp / 1001) + 1 || 1}
           </View>
-          {Math.floor(classroomData.xp / 1001) + 1 >= 10 && (
-            <Redirect to={`/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`} />
-          )}
+          {!isBossEnabled && Math.floor(classroomData.xp / 1001) + 1 >= 2 && setIsBossEnabled(true)}
           <img
             style={{
               width: Math.min((classroomData.xp % 1000.0000001) / 1000 || 0, 1) * 100 + '%',
@@ -87,6 +87,18 @@ export default function Classroom({ match }) {
         </View>
       </View>
       <View p={10} alignCenter>
+        <View mb={10}>
+          {classroomData.bossCurrentHealth <= 0 && (
+            <Button
+              onClick={() => {
+                dispatch.user.setItem('hair', 'rw2bPBAdDI6hCdufcxyB', match.params.classroomId)
+                dispatch.user.setItem('costume', '6LhnrK9jAWSV3YgZ1qfv', match.params.classroomId)
+              }}
+            >
+              ALBERT HAMSTEIN CLOTHES
+            </Button>
+          )}
+        </View>
         <View row>
           <Button
             onClick={() => {
@@ -178,12 +190,21 @@ export default function Classroom({ match }) {
         <Button
           className={styles.animation}
           onClick={() => {
+            if (isBossEnabled) {
+              window.location.href = `/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`
+              return
+            }
+            if (isDoneAssignment) {
+              alert('You already finished the assignment, help your friend finish theirs')
+              return
+            }
+            setIsDoneAssignment(true)
             getClassroomDoc(match.params.classroomId).update({
-              xp: classroomData.xp + 50,
+              xp: classroomData.xp + 150,
             })
           }}
         >
-          Complete Assignments
+          {isBossEnabled ? '!!Fight Boss!!' : isDoneAssignment ? 'Assignment Completed!' : 'Complete Assignments'}
         </Button>
       </View>
 
