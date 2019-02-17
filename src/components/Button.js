@@ -8,6 +8,7 @@ export default React.forwardRef((props, ref) => {
 
 const styles = {
   baseStyle: css({
+    fontFamily: 'Nunito',
     margin: 6,
     height: 40,
     backgroundColor: '#7235A1',

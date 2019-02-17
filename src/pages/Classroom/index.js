@@ -54,6 +54,29 @@ export default function Classroom({ match }) {
           </Button>
         </View>
       </View>
+      <View w="100%" alignCenter>
+        <View w="50%" bc="#7330A3" br={50} bw={4} relative>
+          <img
+            style={{
+              position: 'absolute',
+              width: 60,
+              top: -10,
+              left: -10,
+            }}
+            src={images.purpleButton}
+            alt="yellow health bar"
+          />
+          <img
+            style={{
+              width: '50%',
+              height: 40,
+              borderRadius: 50,
+            }}
+            src={images.yellowBar}
+            alt="yellow health bar"
+          />
+        </View>
+      </View>
       <View p={10}>
         <View row alignCenter>
           <Button
@@ -142,6 +165,9 @@ export default function Classroom({ match }) {
           </Button>
         </View>
       </View>
+      <View absolute bottom={30} left={0} right={0} alignCenter>
+        <Button>Complete Assignments</Button>
+      </View>
 
       <View pointerEvents="none" absoluteFill>
         <Select selector={dispatch.user.getId}>
@@ -168,7 +194,7 @@ function MyCharacter(props) {
   const costumeItem = dispatch.items.getItems()[props.costumeId] || {}
   const hairItem = dispatch.items.getItems()[props.hairId] || {}
   return (
-    <View pointerEvents="none" absolute left={0} right={0} bottom={'33%'} alignCenter>
+    <View className={styles.animation} pointerEvents="none" absolute left={0} right={0} bottom={'33%'} alignCenter>
       {!!skinItem.imageUrl && <img src={skinItem.imageUrl} alt="skin" style={{ width: 200 }} />}
       {!!eyeItem.imageUrl && <img src={eyeItem.imageUrl} alt="eye" style={{ width: 200, position: 'absolute' }} />}
       {!!cheekItem.imageUrl && (
@@ -214,5 +240,16 @@ const styles = {
     height: '100%',
     resizeMode: 'cover',
     zIndex: -1,
+  }),
+  animation: css({
+    animation: 'pulsate 1s infinite',
+    '@keyframes pulsate': {
+      '0%': {
+        transform: 'scaleX(1) scaleY(1)',
+      },
+      '50%': {
+        transform: 'scaleX(1.05) scaleY(1.05)',
+      },
+    },
   }),
 }
