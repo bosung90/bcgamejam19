@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { auth, getUserDocument } from 'firebase/config'
-import { View } from 'components'
+import { Button, Input, View } from 'components'
 import { isEmpty } from 'lodash'
+import * as images from 'images'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -26,7 +27,8 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
+    <View fill>
+      <img src={images.header} alt="header" style={{ height: '45%', width: '100%', resizeMode: 'cover' }} />
       {loading ? (
         'loading...'
       ) : (
@@ -34,9 +36,11 @@ export default function Home() {
           {auth.currentUser ? (
             <View fill>
               {!!redirectClassroom && <Redirect to={redirectClassroom} />}
-              <View row>
-                Welcome {auth.currentUser.email.split('@')[0]}
-                <button
+              <View row alignCenter bold fontSize={20} p={10}>
+                <View mr={10}>Welcome {auth.currentUser.email.split('@')[0]}</View>
+              </View>
+              <View absolute bottom={10} left={10}>
+                <Button
                   onClick={() => {
                     auth.signOut().then(() => {
                       forceUpdate(Date.now().valueOf())
@@ -44,50 +48,51 @@ export default function Home() {
                   }}
                 >
                   Logout
-                </button>
+                </Button>
               </View>
-
-              <button
-                disabled={joining}
-                onClick={() => {
-                  setJoining(true)
-                  auth.currentUser.getIdToken().then(token => {
-                    fetch(process.env.REACT_APP_FUNCTIONS_URL + 'joinClass', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: token,
-                      },
-                      body: JSON.stringify({
-                        classCode: 'abcdefg',
-                      }),
+              <View alignCenter>
+                <Input style={{ width: 300, height: 36, marginBottom: 40 }} value="abcdefg" />
+                <Button
+                  disabled={joining}
+                  style={{ width: 180, height: 50 }}
+                  onClick={() => {
+                    setJoining(true)
+                    auth.currentUser.getIdToken().then(token => {
+                      fetch(process.env.REACT_APP_FUNCTIONS_URL + 'joinClass', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization: token,
+                        },
+                        body: JSON.stringify({
+                          classCode: 'abcdefg',
+                        }),
+                      })
+                        .then(result => result.json())
+                        .then(json => {
+                          return getUserDocument(auth.currentUser.uid).get()
+                        })
+                        .then(doc => {
+                          const userData = doc.data() || {}
+                          if (!isEmpty(userData.joinedClasses)) {
+                            setRedirectClassroom('/classroom/' + Object.keys(userData.joinedClasses)[0])
+                          }
+                        })
+                        .finally(() => {
+                          setJoining(false)
+                        })
                     })
-                      .then(result => result.json())
-                      .then(json => {
-                        return getUserDocument(auth.currentUser.uid).get()
-                      })
-                      .then(doc => {
-                        const userData = doc.data() || {}
-                        if (!isEmpty(userData.joinedClasses)) {
-                          setRedirectClassroom('/classroom/' + Object.keys(userData.joinedClasses)[0])
-                        }
-                      })
-                      .finally(() => {
-                        setJoining(false)
-                      })
-                  })
-                }}
-              >
-                <View cursor="pointer" fontSize={50} bg="#7235A1" color="white" br={50} p={10}>
-                  {joining ? 'Joining...' : 'Join Class'}
-                </View>
-              </button>
+                  }}
+                >
+                  {joining ? 'Entering...' : 'ENTER CLASS'}
+                </Button>
+              </View>
             </View>
           ) : (
             <Redirect to="/login" />
           )}
         </>
       )}
-    </div>
+    </View>
   )
 }

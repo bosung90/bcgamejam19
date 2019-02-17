@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import logo from 'logo.svg'
 import 'App.css'
-import { View } from 'components'
+import { Input, View } from 'components'
 import { auth, getUserDocument } from 'firebase/config'
 import { Redirect } from 'react-router-dom'
 import * as images from 'images'
@@ -57,8 +57,7 @@ export default function Login() {
       <View className={styles.position}>
         <View w={300} className={styles.positionbox}>
           <div style={{ fontWeight: 'bold', paddingLeft: 10, alignItems: 'flex-start' }}>Username</div>
-          <input
-            className={styles.input}
+          <Input
             autoFocus
             ref={usernameInput}
             disabled={usernameExistConfirmed || usernameDontExistConfirmed || verifyingUsername || loggingIn}
@@ -73,8 +72,7 @@ export default function Login() {
           {(usernameExistConfirmed || usernameDontExistConfirmed) && (
             <>
               <div style={{ fontWeight: 'bold', paddingLeft: 10 }}>Password</div>
-              <input
-                className={styles.input}
+              <Input
                 ref={passInput}
                 disabled={loggingIn}
                 value={password}
@@ -86,7 +84,7 @@ export default function Login() {
           {usernameDontExistConfirmed && (
             <>
               <div style={{ fontWeight: 'bold', paddingLeft: 10 }}>Name</div>
-              <input className={styles.input} ref={nameInput} value={name} onChange={e => setName(e.target.value)} />
+              <Input ref={nameInput} value={name} onChange={e => setName(e.target.value)} />
             </>
           )}
           {!usernameExistConfirmed && !usernameDontExistConfirmed && (
