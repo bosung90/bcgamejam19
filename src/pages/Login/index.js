@@ -19,6 +19,32 @@ export default function Login() {
   const usernameInput = useRef()
   const passInput = useRef()
   const nameInput = useRef()
+
+  function checkUsername() {
+    if (!username) {
+      alert('username cannot be empty')
+      return
+    }
+    setVerifyingUsername(true)
+    auth
+      .fetchSignInMethodsForEmail(username + EMAIL_DOMAIN)
+      .then(res => {
+        if (res.includes('password')) {
+          setUsernameExistConfirmed(true)
+          setUsernameDontExistConfirmed(false)
+        } else {
+          setUsernameExistConfirmed(false)
+          setUsernameDontExistConfirmed(true)
+        }
+      })
+      .catch(e => {
+        alert(e.message)
+      })
+      .finally(() => {
+        setVerifyingUsername(false)
+        passInput.current && passInput.current.focus()
+      })
+  }
   return (
     <View fill>
       <div className="App">
@@ -31,6 +57,11 @@ export default function Login() {
             ref={usernameInput}
             disabled={usernameExistConfirmed || usernameDontExistConfirmed || verifyingUsername || loggingIn}
             value={username}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                checkUsername()
+              }
+            }}
             onChange={e => setUsername(e.target.value.trim().toLocaleLowerCase())}
           />
           {(usernameExistConfirmed || usernameDontExistConfirmed) && (
@@ -55,29 +86,7 @@ export default function Login() {
           {!usernameExistConfirmed && !usernameDontExistConfirmed && (
             <button
               onClick={() => {
-                if (!username) {
-                  alert('username cannot be empty')
-                  return
-                }
-                setVerifyingUsername(true)
-                auth
-                  .fetchSignInMethodsForEmail(username + EMAIL_DOMAIN)
-                  .then(res => {
-                    if (res.includes('password')) {
-                      setUsernameExistConfirmed(true)
-                      setUsernameDontExistConfirmed(false)
-                    } else {
-                      setUsernameExistConfirmed(false)
-                      setUsernameDontExistConfirmed(true)
-                    }
-                  })
-                  .catch(e => {
-                    alert(e.message)
-                  })
-                  .finally(() => {
-                    setVerifyingUsername(false)
-                    passInput.current && passInput.current.focus()
-                  })
+                checkUsername()
               }}
               disabled={verifyingUsername}
             >
