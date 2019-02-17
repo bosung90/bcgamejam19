@@ -5,7 +5,7 @@ import { View } from 'components'
 import * as images from 'images'
 import { css } from 'emotion'
 
-export default function Classroom({ match }) {
+export default function Teachers({ match }) {
   const [classroomData, setClassroomData] = useState({})
   const [studentsData, setStudentsData] = useState({})
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Classroom({ match }) {
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
       <View fill p={10}>
         <View row alignCenter>
-          Welcome to {classroomData.name}{' '}
+          You are a teacher managing classroom ({classroomData.name})
           <button
             className={styles.logoutButton}
             onClick={() => {
