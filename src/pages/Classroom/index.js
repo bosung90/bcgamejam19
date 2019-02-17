@@ -314,7 +314,7 @@ const styles = {
     resizeMode: 'cover',
     zIndex: -1,
   }),
-  characterStylingButton: css({ maxWidth: '15%', minWidth: 65, fontSize: 16 }),
+  characterStylingButton: css({ width: 70, minWidth: 65, fontSize: 16 }),
   myCharacter: css({
     minWidth: 150,
     width: '20%',
