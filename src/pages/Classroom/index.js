@@ -102,6 +102,7 @@ export default function Classroom({ match }) {
         </View>
         <View row>
           <Button
+            className={styles.characterStylingButton}
             onClick={() => {
               const eyeItems = dispatch.items.getItems('eye')
               const selectedEyeItem = Object.values(eyeItems)[eyeIndex]
@@ -116,6 +117,7 @@ export default function Classroom({ match }) {
             Eye
           </Button>
           <Button
+            className={styles.characterStylingButton}
             onClick={() => {
               const skinItems = dispatch.items.getItems('skin')
               const selectedSkinItem = Object.values(skinItems)[skinIndex]
@@ -130,6 +132,7 @@ export default function Classroom({ match }) {
             Skin
           </Button>
           <Button
+            className={styles.characterStylingButton}
             onClick={() => {
               const cheekItems = dispatch.items.getItems('cheek')
               const selectedCheekItem = Object.values(cheekItems)[cheekIndex]
@@ -144,6 +147,7 @@ export default function Classroom({ match }) {
             Cheek
           </Button>
           <Button
+            className={styles.characterStylingButton}
             onClick={() => {
               const mouthItems = dispatch.items.getItems('mouth')
               const selectedMouthItem = Object.values(mouthItems)[mouthIndex]
@@ -158,6 +162,7 @@ export default function Classroom({ match }) {
             Mouth
           </Button>
           <Button
+            className={styles.characterStylingButton}
             onClick={() => {
               const hairItems = dispatch.items.getItems('hair')
               const selectedHairItem = Object.values(hairItems)[hairIndex]
@@ -172,6 +177,7 @@ export default function Classroom({ match }) {
             Hair
           </Button>
           <Button
+            className={styles.characterStylingButton}
             onClick={() => {
               const costumeItems = dispatch.items.getItems('costume')
               const selectedCostumeItem = Object.values(costumeItems)[costumeIndex]
@@ -308,6 +314,7 @@ const styles = {
     resizeMode: 'cover',
     zIndex: -1,
   }),
+  characterStylingButton: css({ maxWidth: '15%', minWidth: 65, fontSize: 16 }),
   myCharacter: css({
     minWidth: 150,
     width: '20%',

@@ -18,7 +18,7 @@ const styles = {
     minWidth: 100,
     cursor: 'pointer',
     padding: 6,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
   }),
 }
