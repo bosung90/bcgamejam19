@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getClassroomDoc } from 'firebase/config'
+import { auth } from 'firebase/config'
 
 export default function Classroom({ match }) {
   const [classroomData, setClassroomData] = useState({})
@@ -12,5 +13,18 @@ export default function Classroom({ match }) {
       })
     }
   }, [])
-  return <div>Welcome to {classroomData.name}</div>
+  return (
+    <div>
+      Welcome to {classroomData.name}{' '}
+      <button
+        onClick={() => {
+          auth.signOut().then(() => {
+            window.location.href = '/'
+          })
+        }}
+      >
+        Logout
+      </button>
+    </div>
+  )
 }

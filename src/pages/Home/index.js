@@ -12,7 +12,6 @@ export default function Home() {
     return auth.onAuthStateChanged(user => {
       setLoading(false)
       if (user) {
-        console.log(user.uid)
         getUserDocument(user.uid)
           .get()
           .then(doc => {
@@ -50,10 +49,7 @@ export default function Home() {
               <button
                 onClick={() => {
                   auth.currentUser.getIdToken().then(token => {
-                    console.log(token)
-
-                    // fetch('https://us-central1-bcgamejam19.cloudfunctions.net/joinClass', {
-                    fetch('http://localhost:5000/bcgamejam19/us-central1/joinClass', {
+                    fetch(process.env.REACT_APP_FUNCTIONS_URL + 'joinClass', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
@@ -66,6 +62,14 @@ export default function Home() {
                       .then(result => result.json())
                       .then(json => {
                         console.log(json.success)
+                        getUserDocument(auth.currentUser.uid)
+                          .get()
+                          .then(doc => {
+                            const userData = doc.data() || {}
+                            if (!isEmpty(userData.joinedClasses)) {
+                              setRedirectClassroom('/classroom/' + Object.keys(userData.joinedClasses)[0])
+                            }
+                          })
                       })
                   })
                 }}
