@@ -5,7 +5,7 @@ import { View } from 'components'
 import { auth, getUserDocument } from 'firebase/config'
 import { Redirect } from 'react-router-dom'
 
-const EMAIL_DOMAIN = '@vamster.ca'
+const EMAIL_DOMAIN = '@vampster.ca'
 
 export default function Login() {
   const [username, setUsername] = useState('')
