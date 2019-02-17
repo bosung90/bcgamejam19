@@ -8,6 +8,7 @@ export default function Routes() {
       <Switch>
         <Route path="/" exact component={pages.Home} />
         <Route path="/login" exact component={pages.Login} />
+        <Route path="/classroom/:classroomId" exact component={pages.Classroom} />
       </Switch>
     </Router>
   )
