@@ -187,11 +187,22 @@ export default function Classroom({ match }) {
           </Button>
         </View>
       </View>
-      <View absolute bottom={'20%'} right={'5%'} className={advancingToBoss && styles.flyingRocket}>
-        {Math.floor(classroomData.xp / 1001) + 1 >= 2 && (
-          <img style={{ width: 300 }} src={images.rocket} alt="rocket" />
-        )}
-      </View>
+      {Math.floor(classroomData.xp / 1001) + 1 >= 2 && (
+        <img
+          className={advancingToBoss && styles.flyingRocket}
+          style={{
+            position: 'absolute',
+            right: '5%',
+            bottom: '20%',
+            minWidth: 150,
+            width: '30%',
+            maxHeight: 500,
+            objectFit: 'contain',
+          }}
+          src={images.rocket}
+          alt="rocket"
+        />
+      )}
       <View absolute bottom={30} left={0} right={0} alignCenter>
         <Button
           className={styles.animation}
