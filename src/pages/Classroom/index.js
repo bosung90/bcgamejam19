@@ -19,6 +19,7 @@ export default function Classroom({ match }) {
   const [studentsData, setStudentsData] = useState({})
   const [isDoneAssignment, setIsDoneAssignment] = useState(false)
   const [isBossEnabled, setIsBossEnabled] = useState(false)
+  const [advancingToBoss, setAdvancingToBoss] = useState(false)
   useEffect(() => {
     if (match.params.classroomId) {
       const unsubsClassroom = getClassroomDoc(match.params.classroomId).onSnapshot(doc => {
@@ -73,7 +74,7 @@ export default function Classroom({ match }) {
           <View w={30} h={30} bg="white" center absolute br={15} color="#7330A3" left={-54} bottom={-14} bold>
             {Math.floor(classroomData.xp / 1001) + 1 || 1}
           </View>
-          {!isBossEnabled && Math.floor(classroomData.xp / 1001) + 1 >= 2 && setIsBossEnabled(true)}
+          {!isBossEnabled && Math.floor(classroomData.xp / 1001) + 1 >= 3 && setIsBossEnabled(true)}
           <img
             style={{
               width: Math.min((classroomData.xp % 1000.0000001) / 1000 || 0, 1) * 100 + '%',
@@ -186,12 +187,20 @@ export default function Classroom({ match }) {
           </Button>
         </View>
       </View>
+      <View absolute bottom={'20%'} right={'5%'} className={advancingToBoss && styles.flyingRocket}>
+        {Math.floor(classroomData.xp / 1001) + 1 >= 2 && (
+          <img style={{ width: 300 }} src={images.rocket} alt="rocket" />
+        )}
+      </View>
       <View absolute bottom={30} left={0} right={0} alignCenter>
         <Button
           className={styles.animation}
           onClick={() => {
             if (isBossEnabled) {
-              window.location.href = `/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`
+              setAdvancingToBoss(true)
+              setTimeout(() => {
+                window.location.href = `/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`
+              }, 3900)
               return
             }
             if (isDoneAssignment) {
@@ -205,15 +214,6 @@ export default function Classroom({ match }) {
           }}
         >
           {isBossEnabled ? '!!Fight Boss!!' : isDoneAssignment ? 'Assignment Completed!' : 'Complete Assignments'}
-        </Button>
-      </View>
-      <View absolute right={30} bottom={30} zIndex={2}>
-        <Button
-          onClick={() => {
-            window.location.href = `/classroom/${match.params.classroomId}/bossFight/${classroomData.bossId}`
-          }}
-        >
-          To Boss
         </Button>
       </View>
 
@@ -311,6 +311,17 @@ const styles = {
       },
       '50%': {
         transform: 'scaleX(1.05) scaleY(1.05)',
+      },
+    },
+  }),
+  flyingRocket: css({
+    animation: 'fly 4s ease-in',
+    '@keyframes fly': {
+      '0%': {
+        transform: 'translateY(0)',
+      },
+      '100%': {
+        transform: 'translateY(-300px)',
       },
     },
   }),
