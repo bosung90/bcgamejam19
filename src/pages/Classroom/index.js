@@ -46,7 +46,7 @@ export default function Classroom({ match }) {
       <img className={styles.classroomBG} src={images.classroomBG} alt="classroom background" />
       <View p={10}>
         <View row alignCenter>
-          <View mr={20}>Welcome to {classroomData.name} </View>
+          <View mr={20}>{classroomData.name} </View>
           <Button
             onClick={() => {
               auth.signOut().then(() => {
