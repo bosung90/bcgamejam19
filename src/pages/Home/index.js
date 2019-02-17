@@ -79,7 +79,7 @@ export default function Home() {
                 }}
               >
                 <View cursor="pointer" fontSize={50} bg="#7235A1" color="white" br={50} p={10}>
-                  Join Class
+                  {joining ? 'Joining...' : 'Join Class'}
                 </View>
               </button>
             </View>
