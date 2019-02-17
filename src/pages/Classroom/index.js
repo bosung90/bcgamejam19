@@ -92,6 +92,7 @@ export default function Classroom({ match }) {
           {classroomData.bossCurrentHealth <= 0 && (
             <Button
               onClick={() => {
+                new Audio(require('sounds').wearEquipment).play()
                 dispatch.user.setItem('hair', 'rw2bPBAdDI6hCdufcxyB', match.params.classroomId)
                 dispatch.user.setItem('costume', '6LhnrK9jAWSV3YgZ1qfv', match.params.classroomId)
               }}
@@ -100,10 +101,12 @@ export default function Classroom({ match }) {
             </Button>
           )}
         </View>
+
         <View row>
           <Button
             className={styles.characterStylingButton}
             onClick={() => {
+              new Audio(require('sounds').wearEquipment).play()
               const eyeItems = dispatch.items.getItems('eye')
               const selectedEyeItem = Object.values(eyeItems)[eyeIndex]
               if (selectedEyeItem) {
@@ -119,6 +122,7 @@ export default function Classroom({ match }) {
           <Button
             className={styles.characterStylingButton}
             onClick={() => {
+              new Audio(require('sounds').wearEquipment).play()
               const skinItems = dispatch.items.getItems('skin')
               const selectedSkinItem = Object.values(skinItems)[skinIndex]
               if (selectedSkinItem) {
@@ -134,6 +138,8 @@ export default function Classroom({ match }) {
           <Button
             className={styles.characterStylingButton}
             onClick={() => {
+              new Audio(require('sounds').wearEquipment).play()
+
               const cheekItems = dispatch.items.getItems('cheek')
               const selectedCheekItem = Object.values(cheekItems)[cheekIndex]
               if (selectedCheekItem) {
@@ -149,6 +155,8 @@ export default function Classroom({ match }) {
           <Button
             className={styles.characterStylingButton}
             onClick={() => {
+              new Audio(require('sounds').wearEquipment).play()
+
               const mouthItems = dispatch.items.getItems('mouth')
               const selectedMouthItem = Object.values(mouthItems)[mouthIndex]
               if (selectedMouthItem) {
@@ -164,6 +172,8 @@ export default function Classroom({ match }) {
           <Button
             className={styles.characterStylingButton}
             onClick={() => {
+              new Audio(require('sounds').wearEquipment).play()
+
               const hairItems = dispatch.items.getItems('hair')
               const selectedHairItem = Object.values(hairItems)[hairIndex]
               if (selectedHairItem) {
@@ -179,6 +189,7 @@ export default function Classroom({ match }) {
           <Button
             className={styles.characterStylingButton}
             onClick={() => {
+              new Audio(require('sounds').wearEquipment).play()
               const costumeItems = dispatch.items.getItems('costume')
               const selectedCostumeItem = Object.values(costumeItems)[costumeIndex]
               if (selectedCostumeItem) {
@@ -204,6 +215,7 @@ export default function Classroom({ match }) {
             width: '30%',
             maxHeight: 500,
             objectFit: 'contain',
+            pointerEvents: 'none',
           }}
           src={images.rocket}
           alt="rocket"
