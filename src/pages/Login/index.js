@@ -31,7 +31,7 @@ export default function Login() {
             ref={usernameInput}
             disabled={usernameExistConfirmed || usernameDontExistConfirmed || verifyingUsername || loggingIn}
             value={username}
-            onChange={e => setUsername(e.target.value.trim())}
+            onChange={e => setUsername(e.target.value.trim().toLocaleLowerCase())}
           />
           {(usernameExistConfirmed || usernameDontExistConfirmed) && (
             <>
