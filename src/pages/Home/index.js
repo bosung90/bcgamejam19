@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
+  const [joining, setJoining] = useState(false)
   const [redirectClassroom, setRedirectClassroom] = useState()
   const [, forceUpdate] = useState()
   useEffect(() => {
@@ -47,7 +48,9 @@ export default function Home() {
               </View>
 
               <button
+                disabled={joining}
                 onClick={() => {
+                  setJoining(true)
                   auth.currentUser.getIdToken().then(token => {
                     fetch(process.env.REACT_APP_FUNCTIONS_URL + 'joinClass', {
                       method: 'POST',
@@ -61,15 +64,16 @@ export default function Home() {
                     })
                       .then(result => result.json())
                       .then(json => {
-                        console.log(json.success)
-                        getUserDocument(auth.currentUser.uid)
-                          .get()
-                          .then(doc => {
-                            const userData = doc.data() || {}
-                            if (!isEmpty(userData.joinedClasses)) {
-                              setRedirectClassroom('/classroom/' + Object.keys(userData.joinedClasses)[0])
-                            }
-                          })
+                        return getUserDocument(auth.currentUser.uid).get()
+                      })
+                      .then(doc => {
+                        const userData = doc.data() || {}
+                        if (!isEmpty(userData.joinedClasses)) {
+                          setRedirectClassroom('/classroom/' + Object.keys(userData.joinedClasses)[0])
+                        }
+                      })
+                      .finally(() => {
+                        setJoining(false)
                       })
                   })
                 }}
