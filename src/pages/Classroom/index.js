@@ -249,7 +249,7 @@ export default function Classroom({ match }) {
             }
             setIsDoneAssignment(true)
             getClassroomDoc(match.params.classroomId).update({
-              xp: classroomData.xp + 150,
+              xp: classroomData.xp + 450,
             })
           }}
         >
